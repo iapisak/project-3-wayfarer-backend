@@ -33,6 +33,4 @@ const PostSchema = new Schema({
 
 const Post = model('Post',PostSchema)
 
-module.exports = {
-    Post
-}
+module.exports = Post

@@ -4,8 +4,8 @@ const db = require('../models')
 
 // POST Create User
 const createUser = (req, res) => {
-    console.log(req.body)
-    db.User.findOne({email:req.body.email},(err,foundUser)=>{
+    const {name,email,currentCity,joinDate,slug} = req.body
+    db.User.findOne({email},(err,foundUser)=>{
     if(err){
         res.json({
             status:400,
@@ -31,11 +31,13 @@ const createUser = (req, res) => {
             status: 500,
             error: [{ message: 'The was an error, please try again' }],
           });
-  
           const newUser = {
-            userName: req.body.userName,
-            email: req.body.email,
-            password: hash
+            name,
+            email,
+            password: hash,
+            currentCity,
+            joinDate,
+            slug,
           };
   
           db.User.create(newUser, (err, createdUser) => {

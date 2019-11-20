@@ -25,6 +25,4 @@ const CitySchema = new Schema({
 
 const City = model('City',CitySchema)
 
-module.exports = {
-    City,
-}
+module.exports = City

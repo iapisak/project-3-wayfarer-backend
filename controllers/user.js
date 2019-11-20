@@ -1,29 +1,8 @@
 const db= require('../models')
 
-
-// Create User
-const create = (req,res)=>{
-    const user= {
-        username: req.body.name,
-        email: req.body.email,
-        password: req.body.password,
-        currentCity :req.body.currentCity
-    }
-    db.User.create(user,(error,newUser)=>{
-        if(error) return console.log(error);
-        res.json({
-            status: 201,
-            data: newUser,
-            dateCreated: new Date().toLocaleString()
-        });
-    });
-};
-
-
-
 // Update user
 const update =(req,res)=>{
-    db.User.findByIdAndUpdate(req.params.id,req.body,{new:true},(error, updatedUser)=>{
+    db.User.findByIdAndUpdate(req.body._id,{new:true},(error, updatedUser)=>{
         if(error)return console.log(error);
         res.json({
             status: 200,
@@ -35,7 +14,7 @@ const update =(req,res)=>{
 
 // Delete User
 const destroy = (req,res)=>{
-    db.User.findByIdAndDelete(req.params.id,(error,deletedUser)=>{
+    db.User.findByIdAndDelete(req.body._id,(error,deletedUser)=>{
         if(error)return console.log(error);
         res.json({
             status: 200,
@@ -63,7 +42,6 @@ const index = (req,res)=>{
 module.exports = {
     destroy,
     update,
-    create,
     index
 }
 

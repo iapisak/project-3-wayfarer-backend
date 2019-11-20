@@ -15,7 +15,7 @@ mongoose.connect(DBURI, {
     .catch((err) => console.log(`MongoDB connection error": ${err}`));
 
 module.exports = {
-    User,
+    User: require('./User'),
     City,
     Post,
     Comment

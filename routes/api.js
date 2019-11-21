@@ -22,6 +22,8 @@ router.post('/users/login', ctrl.auth.createSession)
 
 router.get('/users/', ctrl.user.index );
 
+router.get('/users/:id/posts', ctrl.post.userPosts);
+
 router.get('/users/:id', ctrl.user.getUserInfo);
 
 
@@ -31,6 +33,11 @@ router.get('/users/:id', ctrl.user.getUserInfo);
 
 
 // Post Routes : Create, Update, Delete, Get
+router.post('/posts',ctrl.post.createPost)
+
+router.get('/posts', ctrl.post.allPosts)
+
+
 
 module.exports = router;
 

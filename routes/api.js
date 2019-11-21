@@ -22,6 +22,8 @@ router.post('/users/login', ctrl.auth.createSession)
 
 router.get('/users/', ctrl.user.index );
 
+router.get('/users/:id/posts', ctrl.post.userPosts);
+
 router.get('/users/:id', ctrl.user.getUserInfo);
 
 

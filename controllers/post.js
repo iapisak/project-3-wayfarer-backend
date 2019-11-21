@@ -17,12 +17,14 @@ const createPost = (req,res) => {
 
 
 const userPosts = (req,res) => {
-   const {_id} = req.body
-    db.User.findById(_id, (err,foundUser)=>{
+  
+    db.User.findById({_id:req.params.id}, (err,foundUser)=>{
         if (err) return res.status(500)
         if(foundUser){
-            foundUser.populate(posts)
-            res.send({status:200,data:foundUser.posts})
+           const posts = foundUser.populate("posts")
+            res.send({status:200,posts})
+            
+            
         }
         else res.status(500).json({message:'user not found'})
     })

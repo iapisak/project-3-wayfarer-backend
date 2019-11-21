@@ -39,13 +39,14 @@ const index = (req,res)=>{
     })
 };
 
-const findOneUser = (req, res) => {
+const getUserInfo = (req, res) => {
     db.User.findOne({ _id: req.params.id }, (err, foundUser) => {
         if (err) return console.log(err);
+        let { posts, ...userInfo } = foundUser;
         res.json({
             status: 200,
             count: 1,
-            data: foundUser,
+            data: userInfo,
             requestedAt: new Date().toLocaleDateString(),
         });
     })
@@ -55,6 +56,6 @@ module.exports = {
     destroy,
     update,
     index,
-    findOneUser,
+    getUserInfo,
 }
 

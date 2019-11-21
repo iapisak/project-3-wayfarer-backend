@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const {Schema} = mongoose
+const Post = require('./Post')
 
 
 
@@ -32,11 +33,7 @@ const UserSchema = new Schema({
         default:'https://cdn.dribbble.com/users/304574/screenshots/6222816/male-user-placeholder.png'
     },
 
-    posts:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref:'Post'
-
-    },
+    posts:[{type:mongoose.Schema.Types.ObjectId,ref:'Post'}],
     slug:{
         type:String,
     },

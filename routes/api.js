@@ -31,6 +31,11 @@ router.get('/users/:id', ctrl.user.findOneUser);
 
 
 // Post Routes : Create, Update, Delete, Get
+router.post('/posts',ctrl.post.createPost)
+
+router.get('/posts', ctrl.post.allPosts)
+
+
 
 module.exports = router;
 

@@ -20,15 +20,17 @@ router.get('/logout', ctrl.auth.logout)
 
 router.post('/users/login', ctrl.auth.createSession)
 
-router.get('/users/', ctrl.user.index )
+router.get('/users/', ctrl.user.index );
+
+router.get('/users/:id', ctrl.user.findOneUser);
 
 
 // Comment Routes: Create, Update, Delete, Get
-// -----Route for updating 
+// -----Route for updating
 
 
 
-// Post Routes : Create, Update, Delete, Get 
+// Post Routes : Create, Update, Delete, Get
 
 module.exports = router;
 

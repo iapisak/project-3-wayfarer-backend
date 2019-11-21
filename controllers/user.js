@@ -37,11 +37,24 @@ const index = (req,res)=>{
             requestedAt: new Date().toLocaleDateString()
         })
     })
-}
+};
+
+const findOneUser = (req, res) => {
+    db.User.findOne({ _id: req.params.id }, (err, foundUser) => {
+        if (err) return console.log(err);
+        res.json({
+            status: 200,
+            count: 1,
+            data: foundUser,
+            requestedAt: new Date().toLocaleDateString(),
+        });
+    })
+};
 
 module.exports = {
     destroy,
     update,
-    index
+    index,
+    findOneUser,
 }
 

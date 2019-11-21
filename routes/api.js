@@ -20,7 +20,7 @@ router.get('/logout', ctrl.auth.logout)
 
 router.post('/users/login', ctrl.auth.createSession)
 
-
+router.get('/users/', ctrl.user.index )
 
 
 // Comment Routes: Create, Update, Delete, Get

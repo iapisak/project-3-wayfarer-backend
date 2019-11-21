@@ -13,7 +13,7 @@ router.delete('/users/', ctrl.user.destroy )
 router.post('/users/create', ctrl.auth.createUser)
 
 // -----Route for updating the user
-router.put('/users/update/:id',ctrl.user.update)
+router.put('/users/:id/update',ctrl.user.update)
 
 // --Route for logging out
 router.get('/logout', ctrl.auth.logout)

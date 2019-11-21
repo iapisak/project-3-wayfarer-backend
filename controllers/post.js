@@ -2,7 +2,7 @@ const db= require('../models')
 
 const createPost = (req,res) => {
     const { body } = req
-    const currentUser = "5dd6cbabf6da274494a121d9"
+    const {currentUser} = req.session
     
     const newPost = {...body,user:currentUser}
     console.log(newPost)

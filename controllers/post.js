@@ -40,8 +40,11 @@ const userPosts = (req,res) => {
     db.User.findById({_id:req.params.id}, (err,foundUser)=>{
         if (err) return res.status(500)
         if(foundUser){
-           const { posts } = foundUser.populate("posts")
-            res.send({status:200,posts})
+          foundUser.populate("posts").execPopulate((err,user)=> {
+              if (err) return res.status(500).json({err})
+            res.send({status:200,posts:user.posts})
+          })
+            
             
             
         }

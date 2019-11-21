@@ -2,7 +2,7 @@ const db= require('../models')
 
 // Update user
 const update =(req,res)=>{
-    db.User.findByIdAndUpdate(req.body._id,req.body,{new:false},(error, updatedUser)=>{
+    db.User.findByIdAndUpdate(req.params.id,req.body,{new:false},(error, updatedUser)=>{
         if(error)return console.log(error);
         res.json({
             status: 200,

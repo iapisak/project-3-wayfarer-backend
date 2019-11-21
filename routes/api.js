@@ -37,6 +37,8 @@ router.post('/posts',ctrl.post.createPost)
 
 router.get('/posts', ctrl.post.allPosts)
 
+router.get('/posts/:postId', ctrl.post.getPost)
+
 
 
 module.exports = router;

@@ -2,7 +2,7 @@ const db= require('../models')
 
 const createPost = (req,res) => {
     const { body } = req
-    const {currentUser} = req.session
+    const { currentUser } = req.session
     
     const newPost = {...body,user:currentUser}
     console.log(newPost)
@@ -26,15 +26,18 @@ const createPost = (req,res) => {
 
 }
 
-const tempUser = (req,res) =>{
-    const newUser = {
-        name:'carson',
-        email:"",
-        password:""
 
-    }
+const getPost = (req,res) => {
+    const _id = req.params.postId
+
+    db.Post.findById(_id,(err,post)=> {
+        if (err) return res.status(500).json({err})
+        res.send({
+            status:201,
+            post,
+        })
+    })
 }
-
 const userPosts = (req,res) => {
   
     db.User.findById({_id:req.params.id}, (err,foundUser)=>{
@@ -63,5 +66,6 @@ const allPosts = (req,res) => {
 module.exports = {
     createPost,
     allPosts,
-    userPosts
+    userPosts,
+    getPost
 }

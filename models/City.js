@@ -12,11 +12,11 @@ const CitySchema = new Schema({
         default:''
     },
 
-    posts:{
+    posts:[{
         type: mongoose.Schema.Types.ObjectId,
         ref:'Post'
 
-    },
+    }],
 
     slug:{
         type:String

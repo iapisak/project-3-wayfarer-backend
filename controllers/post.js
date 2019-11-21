@@ -2,27 +2,49 @@ const db= require('../models')
 
 const createPost = (req,res) => {
     const { body } = req
-    const newPost = {...body}
+    const currentUser = "5dd6cbabf6da274494a121d9"
+    
+    const newPost = {...body,user:currentUser}
+    console.log(newPost)
     db.Post.create(newPost, (err,createdPost)=> {
         if(err) return res.status(500).json({err,message:'it broke'})
         res.status(201).json({
             message:"success!",
             data:createdPost
         })
+        db.User.findById(currentUser,(err,user)=>{
+            if (err) return console.log(err)
+            if(user){
+            user.posts.push(createdPost._id)
+            user.save((err,result)=>{
+                if (err) return console.log(err)
+                console.log(result)
+            })}
+        })
     })
     
 
 }
 
+const tempUser = (req,res) =>{
+    const newUser = {
+        name:'carson',
+        email:"",
+        password:""
 
+    }
+}
 
 const userPosts = (req,res) => {
   
     db.User.findById({_id:req.params.id}, (err,foundUser)=>{
         if (err) return res.status(500)
         if(foundUser){
-           const posts = foundUser.populate("posts")
-            res.send({status:200,posts})
+          foundUser.populate("posts").execPopulate((err,user)=> {
+              if (err) return res.status(500).json({err})
+            res.send({status:200,posts:user.posts})
+          })
+            
             
             
         }

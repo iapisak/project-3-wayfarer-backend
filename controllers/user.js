@@ -2,7 +2,7 @@ const db= require('../models')
 
 // Update user
 const update =(req,res)=>{
-    db.User.findByIdAndUpdate(req.body._id,req.body,{new:false},(error, updatedUser)=>{
+    db.User.findByIdAndUpdate(req.params.id,req.body,{new:true},(error, updatedUser)=>{
         if(error)return console.log(error);
         res.json({
             status: 200,
@@ -42,11 +42,11 @@ const index = (req,res)=>{
 const getUserInfo = (req, res) => {
     db.User.findOne({ _id: req.params.id }, (err, foundUser) => {
         if (err) return console.log(err);
-        let { posts, ...userInfo } = foundUser;
+        // let { posts, ...userInfo } = foundUser;
         res.json({
             status: 200,
             count: 1,
-            data: userInfo,
+            data: foundUser,
             requestedAt: new Date().toLocaleDateString(),
         });
     })

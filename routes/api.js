@@ -13,7 +13,7 @@ router.delete('/users/', ctrl.user.destroy )
 router.post('/users/create', ctrl.auth.createUser)
 
 // -----Route for updating the user
-router.put('/users/update',ctrl.user.update)
+router.put('/users/:id/update',ctrl.user.update)
 
 // --Route for logging out
 router.get('/logout', ctrl.auth.logout)
@@ -36,6 +36,8 @@ router.get('/users/:id', ctrl.user.getUserInfo);
 router.post('/posts',ctrl.post.createPost)
 
 router.get('/posts', ctrl.post.allPosts)
+
+router.get('/posts/:postId', ctrl.post.getPost)
 
 
 

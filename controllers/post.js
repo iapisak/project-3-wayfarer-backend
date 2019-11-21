@@ -2,7 +2,7 @@ const db= require('../models')
 
 const createPost = (req,res) => {
     const { body } = req
-    const currentUser = "5dd6cbabf6da274494a121d9"
+    const { currentUser } = req.session
     
     const newPost = {...body,user:currentUser}
     console.log(newPost)
@@ -26,15 +26,18 @@ const createPost = (req,res) => {
 
 }
 
-const tempUser = (req,res) =>{
-    const newUser = {
-        name:'carson',
-        email:"",
-        password:""
 
-    }
+const getPost = (req,res) => {
+    const _id = req.params.postId
+
+    db.Post.findById(_id,(err,post)=> {
+        if (err) return res.status(500).json({err})
+        res.send({
+            status:201,
+            post,
+        })
+    })
 }
-
 const userPosts = (req,res) => {
   
     db.User.findById({_id:req.params.id}, (err,foundUser)=>{
@@ -43,14 +46,14 @@ const userPosts = (req,res) => {
           foundUser.populate("posts").execPopulate((err,user)=> {
               if (err) return res.status(500).json({err})
             res.send({status:200,posts:user.posts})
-          })
-            
-            
-            
-        }
-        else res.status(500).json({message:'user not found'})
-    })
+        })
+        
+    }
+    else res.status(500).json({message:'user not found'})
+})
 }
+            
+            
 
 const allPosts = (req,res) => {
    db.Post.find({},(err,posts)=>{
@@ -63,5 +66,6 @@ const allPosts = (req,res) => {
 module.exports = {
     createPost,
     allPosts,
-    userPosts
+    userPosts,
+    getPost
 }

@@ -43,14 +43,14 @@ const userPosts = (req,res) => {
           foundUser.populate("posts").execPopulate((err,user)=> {
               if (err) return res.status(500).json({err})
             res.send({status:200,posts:user.posts})
-          })
-            
-            
-            
-        }
-        else res.status(500).json({message:'user not found'})
-    })
+        })
+        
+    }
+    else res.status(500).json({message:'user not found'})
+})
 }
+            
+            
 
 const allPosts = (req,res) => {
    db.Post.find({},(err,posts)=>{

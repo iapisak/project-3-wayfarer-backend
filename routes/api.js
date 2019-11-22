@@ -43,7 +43,7 @@ router.delete('/posts/:postId/delete', ctrl.post.deletePost);
 
 // Cities //
 
-router.put('/cities/new', ctrl.city.createcity)
+router.post('/cities/new', ctrl.city.createcity)
 
 router.get('/cities', ctrl.city.allCities)
 router.get('/cities/:city_id/posts', ctrl.city.allPostsOfCity)

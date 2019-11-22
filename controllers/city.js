@@ -2,17 +2,18 @@ const db= require('../models')
 
 const allCities = (req, res) => {
     db.City.find({}, (err, foundCity) => {
-        if (err) return res.status(500).json({ error: "Could not find Cities" }) 
+        if (err) return res.status(500).json({ error: "Could not find Cities" })
         res.json({ status: 200, data: foundCity,})
     })
 }
 
 const allPostsOfCity = (req, res) => {
-    db.City.findById(req.params.city_id, (err, foundCity) => {
-        if (err) return res.status(500).json({ error: "Could not find Cities" }) 
-        foundCity.populate("posts").execPopulate((err, foundPosts) => {
+
+    db.City.findOne({ slug: req.params.slug }, (err, foundCity) => {
+        if (err) return res.status(500).json({ error: "Could not find Cities" })
+        foundCity.populate("posts").execPopulate((err, city) => {
             if (err) return res.status(500).json({ error: "Could not find Posts" })
-            res.json({ status: 200, data: foundPosts,})
+            res.json({ status: 200, data: city.posts,})
         })
     })
 }
@@ -26,7 +27,7 @@ const editPosts = (req, res) => {
 
 const userAllPosts = (req, res) => {
     db.User.findById(req.params.user_id, (err, foundUser) => {
-        if (err) return res.status(500).json({ error: "Could not find this User" }) 
+        if (err) return res.status(500).json({ error: "Could not find this User" })
         foundUser.populate("posts").execPopulate((err, foundPosts) => {
             if (err) return res.status(500).json({ error: "Could not find Posts"})
             res.json({ status: 200, data: foundPosts})

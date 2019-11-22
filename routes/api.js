@@ -39,6 +39,8 @@ router.get('/posts', ctrl.post.allPosts)
 
 router.get('/posts/:postId', ctrl.post.getPost)
 
+router.delete('/posts/:postId/delete', ctrl.post.deletePost);
+
 // Cities //
 
 router.post('/cities/new', ctrl.city.createcity)

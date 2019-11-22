@@ -1,30 +1,40 @@
 const db = require('../models')
 
 const createPost = (req, res) => {
-    const { body } = req;
-    const { currentUser } = req.session;
-    const { city_id } = req.params;
+    const { body, params } = req;
+    // const { currentUser } = req.session;
+    const currentUser = '5dd606570b907d02df17dc45'; // manual for testing!
 
-    const newPost = { ...body, user: currentUser, city: city_id };
-    console.log(newPost)
-    db.Post.create(newPost, (err, createdPost) => {
-        if (err) return res.status(500).json({ err, message:'it broke' });
-        res.status(201).json({
-            message: 'success!',
-            data: createdPost,
-        });
-        db.User.findById(currentUser, (err, user) => {
-            if (err) return console.log(err)
-            if(user){
-            user.posts.push(createdPost._id)
-            user.save((err,result)=>{
+    db.City.findOne({ slug: params.city_slug }, (err, foundCity) => {
+        if (err) {
+            return res.status(404).json({ err, message: 'city not found', });
+        }
+        const cityId = foundCity._id;
+        const newPost = { ...body, user: currentUser, city: cityId };
+        db.Post.create(newPost, (err, createdPost) => {
+            if (err) return res.status(500).json({ err, message:'it broke' });
+            res.status(201).json({
+                message: 'success!',
+                data: createdPost,
+            });
+
+            foundCity.posts.push(createdPost._id);
+            foundCity.save((err) => {
+                if (err) return console.log(err);
+            })
+
+            db.User.findById(currentUser, (err, user) => {
                 if (err) return console.log(err)
-                console.log(result)
-            })}
+                if(user){
+                user.posts.push(createdPost._id)
+                user.save((err,result)=>{
+                    if (err) return console.log(err)
+                    console.log(result)
+                })}
+            });
         });
     });
 }
-
 
 const getPost = (req,res) => {
     const _id = req.params.postId

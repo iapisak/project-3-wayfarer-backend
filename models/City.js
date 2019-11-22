@@ -4,7 +4,7 @@ const {Schema,model} = mongoose
 const CitySchema = new Schema({
     name:{
         type:String,
-        required:[true,'hey dumbasss you need a name']
+        required:[true,'hey you need a name']
     },
 
     photo:{

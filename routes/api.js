@@ -33,7 +33,7 @@ router.get('/users/:id', ctrl.user.getUserInfo);
 
 
 // Post Routes : Create, Update, Delete, Get
-router.post('/posts',ctrl.post.createPost)
+router.post('/cities/:city_slug/posts/new',ctrl.post.createPost);
 
 router.get('/posts', ctrl.post.allPosts)
 
@@ -46,7 +46,7 @@ router.delete('/posts/:postId/delete', ctrl.post.deletePost);
 router.post('/cities/new', ctrl.city.createcity)
 
 router.get('/cities', ctrl.city.allCities)
-router.get('/cities/:city_id/posts', ctrl.city.allPostsOfCity)
+router.get('/cities/:city_slug/posts', ctrl.city.allPostsOfCity)
 router.put('/posts/:post_id/edit', ctrl.city.editPosts)
 router.get('/user/posts/:post_id', ctrl.city.userAllPosts)
 

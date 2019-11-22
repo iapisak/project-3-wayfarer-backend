@@ -39,6 +39,9 @@ router.get('/posts', ctrl.post.allPosts)
 
 router.get('/posts/:postId', ctrl.post.getPost)
 
+// Cities //
+
+router.get('/cities', ctrl.city.allCities)
 
 
 module.exports = router;

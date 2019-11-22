@@ -41,7 +41,7 @@ router.get('/posts/:postId', ctrl.post.getPost)
 
 // Cities //
 
-router.put('/cities/new', ctrl.city.createcity)
+router.post('/cities/new', ctrl.city.createcity)
 
 router.get('/cities', ctrl.city.allCities)
 router.get('/cities/:city_id/posts', ctrl.city.allPostsOfCity)

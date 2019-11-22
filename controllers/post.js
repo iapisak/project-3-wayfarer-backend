@@ -1,8 +1,8 @@
 const db= require('../models')
 
-const createPost = (req,res) => {
-    const { body } = req
-    const { currentUser } = req.session
+const createPost = ({body,session},res) => {
+    
+    const { currentUser } = session
     
     const newPost = {...body,user:currentUser}
     console.log(newPost)

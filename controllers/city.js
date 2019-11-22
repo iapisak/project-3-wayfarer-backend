@@ -13,6 +13,7 @@ const allPostsOfCity = (req, res) => {
         if (err) return res.status(500).json({ error: "Could not find Cities" })
         if (foundCity) {
             foundCity.populate("posts").execPopulate((err, city) => {
+                console.log(city)
                 if (err) return res.status(500).json({ error: "Could not find Posts" })
                 res.json({ status: 200, posts: city.posts,})
             })

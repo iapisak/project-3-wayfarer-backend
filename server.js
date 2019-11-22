@@ -32,6 +32,10 @@ app.use(session({
     }
   }));
 
+
+// ------ View Routes ------- //
+app.use('/', routes)
+
 // -------Routes-----//
 
 app.use('/api/v1', routes)

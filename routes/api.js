@@ -41,7 +41,14 @@ router.get('/posts/:postId', ctrl.post.getPost)
 
 router.delete('/posts/:postId/delete', ctrl.post.deletePost);
 
+// Cities //
 
+router.put('/cities/new', ctrl.city.createcity)
+
+router.get('/cities', ctrl.city.allCities)
+router.get('/cities/:city_id/posts', ctrl.city.allPostsOfCity)
+router.put('/posts/:post_id/edit', ctrl.city.editPosts)
+router.get('/user/posts/:post_id', ctrl.city.userAllPosts)
 
 module.exports = router;
 

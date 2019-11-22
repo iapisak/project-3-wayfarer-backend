@@ -3,7 +3,7 @@ const db = require('../models')
 const createPost = (req, res) => {
     const { body, params } = req;
     // const { currentUser } = req.session;
-    const currentUser = '5dd606570b907d02df17dc45'; // manual for testing!
+    const currentUser = '5dd5deb8a1c39ff061b651ad'; // manual for testing!
 
     db.City.findOne({ slug: params.city_slug }, (err, foundCity) => {
         if (err) {

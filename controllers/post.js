@@ -2,13 +2,15 @@ const db = require('../models')
 
 const createPost = (req, res) => {
     const { body, params } = req;
-    // const { currentUser } = req.session;
-    const currentUser = '5dd606570b907d02df17dc45'; // manual for testing!
+    const { currentUser } = req.session;
+    //const currentUser = '5dd606570b907d02df17dc45'; // manual for testing!
+    
 
     db.City.findOne({ slug: params.city_slug }, (err, foundCity) => {
         if (err) {
             return res.status(404).json({ err, message: 'city not found', });
         }
+        console.log('beep')
         const cityId = foundCity._id;
         const newPost = { ...body, user: currentUser, city: cityId };
         db.Post.create(newPost, (err, createdPost) => {

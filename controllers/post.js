@@ -2,8 +2,8 @@ const db = require('../models')
 
 const createPost = (req, res) => {
     const { body, params } = req;
-    // const { currentUser } = req.session;
-    const currentUser = '5dd606570b907d02df17dc45'; // manual for testing!
+    const currentUser = body.user;
+    // const currentUser = '5dd606570b907d02df17dc45'; // manual for testing!
 
     db.City.findOne({ slug: params.city_slug }, (err, foundCity) => {
         if (err) {
@@ -70,6 +70,14 @@ const allPosts = (req,res) => {
 
 const deletePost = (req, res) => {
     const { postId } = req.params;
+    db.User.findOne({ posts: postId }, (err, foundUser) => {
+        if (err) return res.status(400).json({ err });
+        if (foundUser) {
+            const post = foundUser.posts.findIndex(p => p._id === postId);
+            foundUser.posts.splice(post, 1);
+            foundUser.save();
+        }
+    });
     db.Post.findOneAndDelete({ _id: postId }, (err, foundPost) => {
         if (err) return res.status(400).json({ err });
         res.status(200).json({

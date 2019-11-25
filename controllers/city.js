@@ -8,11 +8,11 @@ const allCities = (req, res) => {
 }
 
 const allPostsOfCity = (req, res) => {
-
     db.City.findOne({ slug: req.params.city_slug }, (err, foundCity) => {
         if (err) return res.status(500).json({ error: "Could not find Cities" })
         if (foundCity) {
             foundCity.populate("posts").execPopulate((err, city) => {
+                console.log(city)
                 if (err) return res.status(500).json({ error: "Could not find Posts" })
                 res.json({ status: 200, posts: city.posts,})
             })

@@ -2,15 +2,21 @@ const db = require('../models')
 
 const createPost = (req, res) => {
     const { body, params } = req;
+<<<<<<< HEAD
+    //const currentUser = '5dd606570b907d02df17dc45'; // manual for testing!
+    
+=======
     const currentUser = body.user;
     // const currentUser = '5dd606570b907d02df17dc45'; // manual for testing!
+>>>>>>> c23477c8fe59692e66067ffbc8479aaaa47182e2
 
     db.City.findOne({ slug: params.city_slug }, (err, foundCity) => {
         if (err) {
             return res.status(404).json({ err, message: 'city not found', });
         }
+
         const cityId = foundCity._id;
-        const newPost = { ...body, user: currentUser, city: cityId };
+        const newPost = { ...body, city: cityId };
         db.Post.create(newPost, (err, createdPost) => {
             if (err) return res.status(500).json({ err, message:'it broke' });
             res.status(201).json({
@@ -22,14 +28,12 @@ const createPost = (req, res) => {
             foundCity.save((err) => {
                 if (err) return console.log(err);
             })
-
-            db.User.findById(currentUser, (err, user) => {
+            db.User.findById({_id:req.body.user}, (err, user) => {
                 if (err) return console.log(err)
                 if(user){
                 user.posts.push(createdPost._id)
                 user.save((err,result)=>{
                     if (err) return console.log(err)
-                    console.log(result)
                 })}
             });
         });
@@ -63,12 +67,16 @@ const userPosts = (req,res) => {
 const allPosts = (req,res) => {
    db.Post.find({},(err,posts)=>{
        if (err) res.status(500).json({err})
-
        res.send({posts})
    })
 };
 
+
 const deletePost = (req, res) => {
+<<<<<<< HEAD
+    const { postId,userId } = req.params;
+    db.Post.findOneAndDelete({_id:postId,user:userId}, (err, foundPost) => {
+=======
     const { postId } = req.params;
     db.User.findOne({ posts: postId }, (err, foundUser) => {
         if (err) return res.status(400).json({ err });
@@ -79,10 +87,35 @@ const deletePost = (req, res) => {
         }
     });
     db.Post.findOneAndDelete({ _id: postId }, (err, foundPost) => {
+>>>>>>> c23477c8fe59692e66067ffbc8479aaaa47182e2
         if (err) return res.status(400).json({ err });
-        res.status(200).json({
-            deleted: foundPost,
-        });
+        console.log({foundPost})
+        db.User.findById({_id:userId},(err,foundUser)=>{
+            if (err) return res.status(500).json({err})
+            foundUser.posts = foundUser.posts.filter(post=>{
+                return `${post}` != postId
+            })
+            foundUser.save((err,saved)=>{
+                if (err) return console.log(err)
+                console.log('saved')
+                db.City.findById({_id:foundPost.city},(err,foundCity)=> {
+                    if (err) return res.status(500).json({err})
+                    console.log({foundCity})
+                    foundCity.posts = foundCity.posts.filter(post=>{
+                        return `${post}` != postId
+                    })
+                    foundCity.save((err,saved)=>{
+                        if (err) return console.log(err)
+                        console.log('saved')
+                    })
+                
+                })
+            })
+
+        } )
+
+       
+       
     });
 };
 

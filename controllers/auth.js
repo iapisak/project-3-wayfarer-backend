@@ -102,7 +102,9 @@ const logout = (req,res) => {
       if(err){
         res.json({status:400,data:[err]})
         return console.log(err)
+        
       }
+      res.redirect('/')
     })
   }
 module.exports = {

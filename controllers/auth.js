@@ -58,7 +58,8 @@ const createUser = (req, res) => {
 
 
 const createSession = (req, res) => {
-    {
+  console.log('yeeter')
+        console.log(req.body)
         db.User.findOne({ email: req.body.email }, (err, foundUser) => {
           if (err) return res.status(500).json({
             status: 500,
@@ -78,7 +79,7 @@ const createSession = (req, res) => {
             });
       
             if (isMatch) {
-              req.session.currentUser = foundUser._id;
+              req.session.cookie.currentUser = foundUser._id;
               console.log(req.session)
               return res.status(201).json({
                 status: 201,
@@ -92,17 +93,17 @@ const createSession = (req, res) => {
             }
           });
         });
-    }
+    
 };
 
 const logout = (req,res) => {
+  console.log('logged out')
     req.session.destroy(err => {
       if(err){
         res.json({status:400,data:[err]})
         return console.log(err)
       }
     })
-    res.redirect('/')
   }
 module.exports = {
     createUser,

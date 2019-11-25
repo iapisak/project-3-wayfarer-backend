@@ -8,11 +8,11 @@ const allCities = (req, res) => {
 }
 
 const allPostsOfCity = (req, res) => {
-
     db.City.findOne({ slug: req.params.city_slug }, (err, foundCity) => {
         if (err) return res.status(500).json({ error: "Could not find Cities" })
         if (foundCity) {
             foundCity.populate("posts").execPopulate((err, city) => {
+                console.log(city)
                 if (err) return res.status(500).json({ error: "Could not find Posts" })
                 res.json({ status: 200, posts: city.posts,})
             })
@@ -21,9 +21,12 @@ const allPostsOfCity = (req, res) => {
 }
 
 const editPosts = (req, res) => {
-    db.Post.findByIdAndUpdate(req.params.post_id, req.body, {new: true}, (err, updatePost) => {
+    const {user,...edit} = req.body
+    console.log({user},{edit})
+    db.Post.findOneAndUpdate({_id:req.params.post_id,user}, edit, {new: true}, (err, updatePost) => {
         if (err ) return res.status(500).json({ error: "Could not find this Posts" })
         if (updatePost) return res.json({ status:200, data: updatePost })
+        else return res.json({message:"post not found"})
     })
 }
 

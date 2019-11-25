@@ -39,8 +39,15 @@ const userAllPosts = (req, res) => {
 
 const createcity = (req, res) => {
     db.City.create(req.body, (err, createEvent) => {
-        if (err) return res.status(500).json({ error: "Could not create this event"})
+        if (err) return res.status(500).json({ error: "Could not create this city"})
         res.json({ status: 200, data: createEvent })
+    })
+}
+
+const deleteCity = (req, res) => {
+    db.City.findByIdAndDelete(req.params.city_id, (err, deleteCity) => {
+        if (err) return res.status(500).json({ error: "Delete"})
+        res.json({ status: 200, data: deleteCity })
     })
 }
 
@@ -50,4 +57,5 @@ module.exports = {
     editPosts,
     userAllPosts,
     createcity,
+    deleteCity,
 }

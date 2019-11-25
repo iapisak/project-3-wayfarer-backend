@@ -12,7 +12,6 @@ const allPostsOfCity = (req, res) => {
         if (err) return res.status(500).json({ error: "Could not find Cities" })
         if (foundCity) {
             foundCity.populate("posts").execPopulate((err, city) => {
-                console.log(city)
                 if (err) return res.status(500).json({ error: "Could not find Posts" })
                 res.json({ status: 200, posts: city.posts,})
             })
@@ -22,7 +21,6 @@ const allPostsOfCity = (req, res) => {
 
 const editPosts = (req, res) => {
     const {user,...edit} = req.body
-    console.log({user},{edit})
     db.Post.findOneAndUpdate({_id:req.params.post_id,user}, edit, {new: true}, (err, updatePost) => {
         if (err ) return res.status(500).json({ error: "Could not find this Posts" })
         if (updatePost) return res.json({ status:200, data: updatePost })

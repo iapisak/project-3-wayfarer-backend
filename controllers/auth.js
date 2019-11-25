@@ -79,7 +79,7 @@ const createSession = (req, res) => {
             });
       
             if (isMatch) {
-              req.session.cookie.currentUser = foundUser._id;
+              req.session.currentUser = foundUser._id;
               console.log(req.session)
               return res.status(201).json({
                 status: 201,

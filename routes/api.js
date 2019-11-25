@@ -39,7 +39,7 @@ router.get('/posts/', ctrl.post.allPosts)
 
 router.get('/posts/:postId/', ctrl.post.getPost)
 
-router.delete('/posts/:postId/delete/:userId', ctrl.post.deletePost);
+router.delete('/posts/:postId/delete/', ctrl.post.deletePost);
 
 // Cities //
 

@@ -20,6 +20,10 @@ const CitySchema = new Schema({
 
     slug:{
         type:String
+    },
+
+    description: {
+        type:String,
     }
 })
 

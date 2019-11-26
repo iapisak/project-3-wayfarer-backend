@@ -2,7 +2,7 @@ const db = require('../models')
 
 const createPost = (req, res) => {
     const { body, params } = req;
-    
+
     const {currentUser} = req.session;
     if(!currentUser){
         console.log('hey fool')
@@ -41,10 +41,9 @@ const createPost = (req, res) => {
 }
 
 const getPost = (req,res) => {
-    const _id = req.params.postId
-
-    db.Post.findById(_id,(err,post)=> {
+    db.Post.findOne({ _id: req.params.postId },(err, foundPost)=> {
         if (err) return res.status(500).json({err})
+<<<<<<< HEAD
         
         post.populate('comment.user').execPopulate((err,newPost)=>{
             if (err) return res.status(500).json({err})
@@ -54,6 +53,16 @@ const getPost = (req,res) => {
                 post:newPost,
             })
         })
+=======
+        if (foundPost) {
+            foundPost.populate('user').execPopulate((err, post) => {
+                return res.send({
+                    status: 201,
+                    post,
+                });
+            })
+        }
+>>>>>>> 49ef9fd9bbea2bf7c86dd72518e24bda1113afa5
     })
 }
 const userPosts = (req,res) => {
@@ -103,9 +112,13 @@ const deletePost = (req, res) => {
 
                     foundCity.save((err,saved)=>{
                         if (err) return console.log(err)
+<<<<<<< HEAD
                         return res.status(200).json({ data:foundPost })
+=======
+                        return res.status(200).json({ data: foundPost })
+>>>>>>> 49ef9fd9bbea2bf7c86dd72518e24bda1113afa5
                     })
-                
+
                 })
             })
 
@@ -116,8 +129,8 @@ const deletePost = (req, res) => {
             })
         }
 
-       
-       
+
+
     });
 };
 

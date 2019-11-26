@@ -40,9 +40,8 @@ const index = (req,res)=>{
 };
 
 const getUserInfo = (req, res) => {
-    db.User.findOne({ _id: req.params.id }, (err, foundUser) => {
+    db.User.findOne({ name: req.params.slug }, (err, foundUser) => {
         if (err) return console.log(err);
-        // let { posts, ...userInfo } = foundUser;
         res.json({
             status: 200,
             count: 1,

@@ -61,7 +61,7 @@ const getPost = (req,res) => {
     })
 }
 const userPosts = (req,res) => {
-    db.User.findById({_id:req.params.id}, (err,foundUser)=>{
+    db.User.findOne({ name: req.params.slug }, (err,foundUser)=>{
         if (err) return res.status(500)
         if(foundUser){
           foundUser.populate("posts").execPopulate((err,user)=> {

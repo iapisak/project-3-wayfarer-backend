@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const User = require('./User')
 const City = require('./City')
 const Post = require('./Post')
-const Comment = require('./Comment')
+
 const DBURI = 'mongodb://localhost:27017/wayfarer-backend'
 
 mongoose.connect(DBURI, {
@@ -18,5 +18,5 @@ module.exports = {
     User: require('./User'),
     City,
     Post,
-    Comment
+    
 }

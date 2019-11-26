@@ -1,6 +1,5 @@
 const mongoose = require('mongoose')
 const {Schema,model} = mongoose
-const Comment = require('./Comment')
 
 const PostSchema = new Schema({
     timestamp:Date,

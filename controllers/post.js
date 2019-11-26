@@ -2,8 +2,12 @@ const db = require('../models')
 
 const createPost = (req, res) => {
     const { body, params } = req;
-    const currentUser = body.user;
-    // const currentUser = '5dd606570b907d02df17dc45'; // manual for testing!
+    
+    const {currentUser} = req.session;
+    if(!currentUser){
+        console.log('hey fool')
+        return res.status(500).json({message:"you must be logged in"})
+    }
 
     db.City.findOne({ slug: params.city_slug }, (err, foundCity) => {
         if (err) {
@@ -12,6 +16,7 @@ const createPost = (req, res) => {
 
         const cityId = foundCity._id;
         const newPost = { ...body, city: cityId };
+        newPost.user = currentUser
         db.Post.create(newPost, (err, createdPost) => {
             if (err) return res.status(500).json({ err, message:'it broke' });
             res.status(201).json({
@@ -23,7 +28,7 @@ const createPost = (req, res) => {
             foundCity.save((err) => {
                 if (err) return console.log(err);
             })
-            db.User.findById({_id:req.body.user}, (err, user) => {
+            db.User.findById({_id:currentUser}, (err, user) => {
                 if (err) return console.log(err)
                 if(user){
                 user.posts.push(createdPost._id)
@@ -68,11 +73,17 @@ const allPosts = (req,res) => {
 
 
 const deletePost = (req, res) => {
-    const { postId,userId } = req.params;
-    db.Post.findOneAndDelete({_id:postId,user:userId}, (err, foundPost) => {
+    const { postId } = req.params;
+    const { currentUser } = req.session
+    if(!currentUser){
+        console.log('not logged in')
+        return res.status(500).json({message:"you must be logged in"})
+    }
+    db.Post.findOneAndDelete({_id:postId,user:currentUser}, (err, foundPost) => {
         if (err) return res.status(400).json({ err });
-
-        db.User.findById({_id:userId},(err,foundUser)=>{
+        if(foundPost){
+            console.log('here')
+        db.User.findById({_id:currentUser},(err,foundUser)=>{
             if (err) return res.status(500).json({err})
             foundUser.posts = foundUser.posts.filter(post=>{
                 return `${post}` != postId
@@ -92,7 +103,12 @@ const deletePost = (req, res) => {
                 })
             })
 
-        } )
+        } )}
+        else{
+            res.status(500).json({
+                message:'bruh moment'
+            })
+        }
 
        
        

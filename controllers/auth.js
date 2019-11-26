@@ -79,7 +79,7 @@ const createSession = (req, res) => {
             });
       
             if (isMatch) {
-              req.session.cookie.currentUser = foundUser._id;
+              req.session.currentUser = foundUser._id;
               console.log(req.session)
               return res.status(201).json({
                 status: 201,
@@ -102,7 +102,9 @@ const logout = (req,res) => {
       if(err){
         res.json({status:400,data:[err]})
         return console.log(err)
+        
       }
+      res.redirect('/')
     })
   }
 module.exports = {

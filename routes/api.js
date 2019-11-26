@@ -39,7 +39,7 @@ router.get('/posts/', ctrl.post.allPosts)
 
 router.get('/posts/:postId/', ctrl.post.getPost)
 
-router.delete('/posts/:postId/delete/:userId', ctrl.post.deletePost);
+router.delete('/posts/:postId/delete/', ctrl.post.deletePost);
 
 // Cities //
 
@@ -50,7 +50,7 @@ router.get('/cities/:city_slug/posts/', ctrl.city.allPostsOfCity)
 router.put('/posts/:post_id/edit/', ctrl.city.editPosts)
 router.get('/user/posts/:post_id/', ctrl.city.userAllPosts)
 
-router.delete('/delete', ctrl.city.deleteCity)
+router.delete('/delete/:city_id', ctrl.city.deleteAll)
 
 module.exports = router;
 

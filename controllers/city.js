@@ -45,10 +45,18 @@ const createcity = (req, res) => {
     })
 }
 
+const deleteAll = (req, res) => {
+    db.City.findOneAndDelete({_id: req.params.city_id}, (err, deleteAll) => {
+        if (err) return res.status(500).json({ error: "Could not create this event"})
+        res.json({ status: 200, data: deleteAll })
+    })
+}
+
 module.exports = {
     allCities,
     allPostsOfCity,
     editPosts,
     userAllPosts,
     createcity,
+    deleteAll,
 }

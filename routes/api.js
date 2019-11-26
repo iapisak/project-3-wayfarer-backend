@@ -50,6 +50,8 @@ router.get('/cities/:city_slug/posts/', ctrl.city.allPostsOfCity)
 router.put('/posts/:post_id/edit/', ctrl.city.editPosts)
 router.get('/user/posts/:post_id/', ctrl.city.userAllPosts)
 
+//COMMENT
+router.post('/comment/:postId/',ctrl.comment.createComment)
 module.exports = router;
 
 

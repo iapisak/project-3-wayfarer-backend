@@ -45,9 +45,14 @@ const getPost = (req,res) => {
 
     db.Post.findById(_id,(err,post)=> {
         if (err) return res.status(500).json({err})
-        res.send({
-            status:201,
-            post,
+        
+        post.populate('comment.user').execPopulate((err,newPost)=>{
+            if (err) return res.status(500).json({err})
+            console.log(newPost)
+            res.send({
+                status:201,
+                post:newPost,
+            })
         })
     })
 }
@@ -98,6 +103,7 @@ const deletePost = (req, res) => {
 
                     foundCity.save((err,saved)=>{
                         if (err) return console.log(err)
+                        return res.status(200).json({ data:foundPost })
                     })
                 
                 })

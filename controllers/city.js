@@ -48,7 +48,7 @@ const createcity = (req, res) => {
 }
 
 const deleteCity = (req, res) => {
-    db.City.findByIdAndDelete(req.params.city_id, (err, deleteCity) => {
+    db.Post.deleteMany({}, (err, deleteCity) => {
         if (err) return res.status(500).json({ error: "Delete"})
         res.json({ status: 200, data: deleteCity })
     })

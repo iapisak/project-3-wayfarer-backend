@@ -50,6 +50,8 @@ router.get('/cities/:city_slug/posts/', ctrl.city.allPostsOfCity)
 router.put('/posts/:post_id/edit/', ctrl.city.editPosts)
 router.get('/user/posts/:post_id/', ctrl.city.userAllPosts)
 
+router.delete('/delete', ctrl.city.deleteCity)
+
 module.exports = router;
 
 

@@ -23,7 +23,7 @@ app.use(cors(corsOptions))
 // ------MiddleWare---//
 app.use(bodyParser.json());
 app.use(session({
-    store: new MongoStore({ url: process.env.MONGO_URI }),
+    store: new MongoStore({ url: process.env.MONGODB_URI }),
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,

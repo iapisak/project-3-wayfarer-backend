@@ -45,10 +45,17 @@ const getPost = (req,res) => {
         if (err) return res.status(500).json({err})
         if (foundPost) {
             foundPost.populate('user').execPopulate((err, post) => {
-                return res.send({
-                    status: 201,
-                    post,
-                });
+                if(err) return console.log(err)
+                console.log({post})
+                post.populate('comments.user').execPopulate((err,finalPost)=>{
+                    post.comments.forEach(comment=>console.log({comment}))
+                    if(err) return console.log(err)
+                    return res.send({
+                        status: 201,
+                        post:finalPost,
+                    });
+                })
+               
             })
         }
     })

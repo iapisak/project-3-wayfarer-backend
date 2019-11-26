@@ -2,7 +2,7 @@ const db = require('../models')
 
 const createPost = (req, res) => {
     const { body, params } = req;
-    
+
     const {currentUser} = req.session;
     if(!currentUser){
         console.log('hey fool')
@@ -98,8 +98,9 @@ const deletePost = (req, res) => {
 
                     foundCity.save((err,saved)=>{
                         if (err) return console.log(err)
+                        return res.status(200).json({ data: foundPost })
                     })
-                
+
                 })
             })
 
@@ -110,8 +111,8 @@ const deletePost = (req, res) => {
             })
         }
 
-       
-       
+
+
     });
 };
 

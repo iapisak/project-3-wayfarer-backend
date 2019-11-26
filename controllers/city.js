@@ -26,8 +26,11 @@ const editPosts = (req, res) => {
     const {user,...edit} = req.body
     db.Post.findOneAndUpdate({_id:req.params.post_id,user}, edit, {new: true}, (err, updatePost) => {
         if (err ) return res.status(500).json({ error: "Could not find this Posts" })
-        if (updatePost) return res.json({ status:200, data: updatePost })
-        else return res.json({message:"post not found"})
+        if (updatePost){
+        updatePost.populate('comments.user').execPopulate((err,populatedPost)=>{
+            if(err) return res.status(500).data({err})
+            return res.json({data:populatedPost})
+        })}
     })
 }
 

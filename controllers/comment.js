@@ -13,14 +13,14 @@ const createComment = (req,res) => {
         return res.status(201).json({post:result})
       })
 
-    }
-      )
+    })
+      
   })
+}
   
 
  
  
-}
 
 
 module.exports = {

@@ -26,7 +26,11 @@ const PostSchema = new Schema({
         ref:'City'
     },
 
-    comments:[],
+    comments:[{
+        user: {type:mongoose.Schema.Types.ObjectId,ref:'User'},
+        content:String,
+        timestamp:Date,
+        }],
 
 
 

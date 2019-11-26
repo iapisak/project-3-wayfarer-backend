@@ -43,26 +43,21 @@ const createPost = (req, res) => {
 const getPost = (req,res) => {
     db.Post.findOne({ _id: req.params.postId },(err, foundPost)=> {
         if (err) return res.status(500).json({err})
-<<<<<<< HEAD
-        
-        post.populate('comment.user').execPopulate((err,newPost)=>{
-            if (err) return res.status(500).json({err})
-            console.log(newPost)
-            res.send({
-                status:201,
-                post:newPost,
-            })
-        })
-=======
         if (foundPost) {
             foundPost.populate('user').execPopulate((err, post) => {
-                return res.send({
-                    status: 201,
-                    post,
-                });
+                if(err) return console.log(err)
+                console.log({post})
+                post.populate('comments.user').execPopulate((err,finalPost)=>{
+                    post.comments.forEach(comment=>console.log({comment}))
+                    if(err) return console.log(err)
+                    return res.send({
+                        status: 201,
+                        post:finalPost,
+                    });
+                })
+               
             })
         }
->>>>>>> 49ef9fd9bbea2bf7c86dd72518e24bda1113afa5
     })
 }
 const userPosts = (req,res) => {
@@ -112,11 +107,7 @@ const deletePost = (req, res) => {
 
                     foundCity.save((err,saved)=>{
                         if (err) return console.log(err)
-<<<<<<< HEAD
-                        return res.status(200).json({ data:foundPost })
-=======
                         return res.status(200).json({ data: foundPost })
->>>>>>> 49ef9fd9bbea2bf7c86dd72518e24bda1113afa5
                     })
 
                 })

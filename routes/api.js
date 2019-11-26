@@ -22,9 +22,9 @@ router.post('/users/login', ctrl.auth.createSession)
 
 router.get('/users/', ctrl.user.index );
 
-router.get('/users/:id/posts', ctrl.post.userPosts);
+router.get('/users/:slug/posts', ctrl.post.userPosts);
 
-router.get('/users/:id', ctrl.user.getUserInfo);
+router.get('/users/:slug', ctrl.user.getUserInfo);
 
 
 // Comment Routes: Create, Update, Delete, Get

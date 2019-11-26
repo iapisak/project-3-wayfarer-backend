@@ -41,14 +41,16 @@ const createPost = (req, res) => {
 }
 
 const getPost = (req,res) => {
-    const _id = req.params.postId
-
-    db.Post.findById(_id,(err,post)=> {
+    db.Post.findOne({ _id: req.params.postId },(err, foundPost)=> {
         if (err) return res.status(500).json({err})
-        res.send({
-            status:201,
-            post,
-        })
+        if (foundPost) {
+            foundPost.populate('user').execPopulate((err, post) => {
+                return res.send({
+                    status: 201,
+                    post,
+                });
+            })
+        }
     })
 }
 const userPosts = (req,res) => {

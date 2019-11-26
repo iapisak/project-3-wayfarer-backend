@@ -3,7 +3,8 @@ const User = require('./User')
 const City = require('./City')
 const Post = require('./Post')
 
-const DBURI = 'mongodb://localhost:27017/wayfarer-backend'
+const DBURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/wayfarer-backend'
+
 
 mongoose.connect(DBURI, {
     useNewUrlParser: true,
@@ -18,5 +19,5 @@ module.exports = {
     User: require('./User'),
     City,
     Post,
-    
+
 }

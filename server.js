@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-const PORT = 4000
+const PORT = process.env.PORT || 4000
 const db = require('./models')
 const routes = require('./routes/api')
 const bodyParser = require('body-parser');
@@ -13,7 +13,7 @@ app.listen(PORT, () => {console.log(`We on ${PORT}`)})
 
 
 const corsOptions = {
-    origin:['http://localhost:3000'],
+    origin:['http://localhost:3000', 'https://wayfarer-nightlife.herokuapp.com'],
     credentials: true,
     optionsSuccessStatus: 200
 }
@@ -23,7 +23,7 @@ app.use(cors(corsOptions))
 // ------MiddleWare---//
 app.use(bodyParser.json());
 app.use(session({
-    store: new MongoStore({ url: process.env.MONGO_URI }),
+    store: new MongoStore({ url: process.env.MONGODB_URI }),
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,

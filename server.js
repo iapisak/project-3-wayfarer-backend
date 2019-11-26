@@ -13,7 +13,7 @@ app.listen(PORT, () => {console.log(`We on ${PORT}`)})
 
 
 const corsOptions = {
-    origin:['http://localhost:3000', 'https://wayfarer-nightlife.herokuapp.com/'],
+    origin:['http://localhost:3000', 'https://wayfarer-nightlife.herokuapp.com'],
     credentials: true,
     optionsSuccessStatus: 200
 }

@@ -36,4 +36,8 @@ app.use(session({
 
 app.use('/api/v1', routes);
 
+app.get('/', (req, res) => {
+  res.sendStatus(200);
+});
+
 app.listen(PORT, () => {console.log(`We on ${PORT}`)});

@@ -49,9 +49,16 @@ const createcity = (req, res) => {
 }
 
 const deleteAll = (req, res) => {
-    db.City.findOneAndDelete({_id: req.params.city_id}, (err, deleteAll) => {
+    db.Comment.deleteMany({}, (err, deleteAll) => {
         if (err) return res.status(500).json({ error: "Could not create this event"})
         res.json({ status: 200, data: deleteAll })
+    })
+}
+
+const allComment = (req, res) => {
+    db.Comment.find({}, (err, foundCity) => {
+        if (err) return res.status(500).json({ error: "Could not find Cities" })
+        res.json({ status: 200, data: foundCity,})
     })
 }
 
@@ -62,4 +69,5 @@ module.exports = {
     userAllPosts,
     createcity,
     deleteAll,
+    allComment,
 }

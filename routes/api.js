@@ -52,7 +52,7 @@ router.get('/user/posts/:post_id/', ctrl.city.userAllPosts)
 
 //COMMENT
 router.post('/comment/:postId/',ctrl.comment.createComment)
-router.delete('/delete/:city_id', ctrl.city.deleteAll)
+router.delete('/delete/', ctrl.city.deleteAll)
 
 module.exports = router;
 

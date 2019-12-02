@@ -19,10 +19,12 @@ const createPost = (req, res) => {
         newPost.user = currentUser
         db.Post.create(newPost, (err, createdPost) => {
             if (err) return res.status(500).json({ err, message:'it broke' });
-            res.status(201).json({
-                message: 'success!',
-                data: createdPost,
-            });
+            createdPost.populate('user').execPopulate((err, post) => {
+                res.status(201).json({
+                    message: 'success!',
+                    data: post,
+                });
+            })
 
             foundCity.posts.push(createdPost._id);
             foundCity.save((err) => {
@@ -55,7 +57,7 @@ const getPost = (req,res) => {
                         post:finalPost,
                     });
                 })
-               
+
             })
         }
     })

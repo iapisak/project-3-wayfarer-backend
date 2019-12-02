@@ -4,7 +4,7 @@ const db = require('../models')
 
 // POST Create User
 const createUser = (req, res) => {
-    const {name,email,currentCity,joinDate,slug} = req.body
+    const { name, email, currentCity, joinDate, slug } = req.body;
     db.User.findOne({email},(err,foundUser)=>{
     if(err){
         res.json({
@@ -16,7 +16,6 @@ const createUser = (req, res) => {
     if(foundUser){
         res.json({
             status:400,
-
         })
         return
     }
@@ -31,14 +30,8 @@ const createUser = (req, res) => {
             status: 500,
             error: [{ message: 'The was an error, please try again' }],
           });
-          const newUser = {
-            name,
-            email,
-            password: hash,
-            currentCity,
-            joinDate,
-            slug,
-          };
+
+          const newUser = { ...req.body, password: hash };
 
           db.User.create(newUser, (err, createdUser) => {
             if (err) return res.status(500).json({
@@ -48,7 +41,6 @@ const createUser = (req, res) => {
 
             res.status(201).json({
               status: 201,
-
             });
           });
         });
@@ -58,42 +50,39 @@ const createUser = (req, res) => {
 
 
 const createSession = (req, res) => {
-  console.log('yeeter')
-        console.log(req.body)
-        db.User.findOne({ email: req.body.email }, (err, foundUser) => {
-          if (err) return res.status(500).json({
-            status: 500,
-            error: [{ message: 'Something went wrong. Please try again' }],
-          });
+  db.User.findOne({ email: req.body.email }, (err, foundUser) => {
+    if (err) return res.status(500).json({
+      status: 500,
+      error: [{ message: 'Something went wrong. Please try again' }],
+    });
 
-          // If no user is found by email address
-          if (!foundUser) return res.status(400).json({
-            status: 400,
-            error: [{ message: 'Username or password is incorrect' }],
-          });
+    // If no user is found by email address
+    if (!foundUser) return res.status(400).json({
+      status: 400,
+      error: [{ message: 'Username or password is incorrect' }],
+    });
 
-          bcrypt.compare(req.body.password, foundUser.password, (err, isMatch) => {
-            if (err) return res.status(500).json({
-              status: 500,
-              error: [{ message: 'Something went wrong. Please try again' }],
-            });
+    bcrypt.compare(req.body.password, foundUser.password, (err, isMatch) => {
+      if (err) return res.status(500).json({
+        status: 500,
+        error: [{ message: 'Something went wrong. Please try again' }],
+      });
 
-            if (isMatch) {
-              req.session.currentUser = foundUser._id;
-              console.log(req.session)
-              return res.status(201).json({
-                status: 201,
-                data: { id: foundUser._id, name: foundUser.name },
-              });
-            } else {
-              return res.status(400).json({
-                status: 400,
-                error: [{ message: 'Username or password is incorrect' }],
-              });
-            }
-          });
+      if (isMatch) {
+        req.session.currentUser = foundUser._id;
+        console.log(req.session)
+        return res.status(201).json({
+          status: 201,
+          data: { id: foundUser._id, name: foundUser.name },
         });
-
+      } else {
+        return res.status(400).json({
+          status: 400,
+          error: [{ message: 'Username or password is incorrect' }],
+        });
+      }
+    });
+  });
 };
 
 const logout = (req,res) => {

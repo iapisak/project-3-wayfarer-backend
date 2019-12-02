@@ -7,10 +7,10 @@ const ctrl = require('../controllers')
 // User Routes: Profile, Login, Logout, Update
 
 // ----Delete the user
-router.delete('/users/', ctrl.user.destroy )
+router.delete('/users', ctrl.user.destroy );
 
 // ----Route for Creating a new user
-router.post('/users/create', ctrl.auth.createUser)
+router.post('/users/create', ctrl.auth.createUser);
 
 // -----Route for updating the user
 router.put('/users/:id/update',ctrl.user.update)
@@ -18,9 +18,7 @@ router.put('/users/:id/update',ctrl.user.update)
 // --Route for logging out
 router.get('/logout', ctrl.auth.logout)
 
-router.post('/users/login', ctrl.auth.createSession)
-
-router.get('/users/', ctrl.user.index );
+router.post('/users/login', ctrl.auth.createSession);
 
 router.get('/users/:slug/posts', ctrl.post.userPosts);
 
@@ -35,7 +33,7 @@ router.get('/users/:slug', ctrl.user.getUserInfo);
 // Post Routes : Create, Update, Delete, Get
 router.post('/cities/:city_slug/posts/new/',ctrl.post.createPost);
 
-router.get('/posts/', ctrl.post.allPosts)
+router.get('/posts', ctrl.post.allPosts);
 
 router.get('/posts/:postId/', ctrl.post.getPost)
 
@@ -52,8 +50,6 @@ router.get('/user/posts/:post_id/', ctrl.city.userAllPosts)
 
 //COMMENT
 router.post('/comment/:postId/',ctrl.comment.createComment)
-router.delete('/delete/', ctrl.city.deleteAll)
+// router.delete('/delete/:city_id', ctrl.city.deleteAll)
 
 module.exports = router;
-
-

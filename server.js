@@ -12,8 +12,9 @@ const app = express();
 const PORT = process.env.PORT || 4000;
 
 
+
 const corsOptions = {
-    origin:['http://localhost:3000', 'https://wayfarer-nightlife.herokuapp.com'],
+    origin:['http://localhost:3000', 'https://project-wayfarer3.herokuapp.com'],
     credentials: true,
     optionsSuccessStatus: 200
 }
